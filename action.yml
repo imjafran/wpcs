@@ -13,4 +13,4 @@ runs:
   using: 'composite'
   steps:
     - run: scripts/test.sh
-        shell: bash
+      shell: bash
