@@ -10,5 +10,7 @@ outputs:
   php: # id of output
     description: 'PHP Version that checked compatibility with'
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: 'composite'
+  steps:
+    - run: scripts/test.sh
+        shell: bash
