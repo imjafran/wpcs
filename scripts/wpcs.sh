@@ -17,6 +17,6 @@ phpcs --config-set installed_paths /home/$USER/wpcs,/home/$USER/PHPCompatibility
 phpcs -i
 
 rm phpcs.xml
-wget -O phpcs.xml https://raw.githubusercontent.com/imjafran/wpcs/master/phpcs.xml
+wget -O phpcs.xml https://raw.githubusercontent.com/imjafran/wpcs/master/data/phpcs.xml
 
 phpcs .
