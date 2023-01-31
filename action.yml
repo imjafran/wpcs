@@ -1,16 +1,39 @@
-name: Test WordPress Coding Standards
-description: 'Test WordPress Coding Standards, PHP Coding Standard and PHPCompatibility'
+name: 'Test WordPress Coding Standards'
+
+description: 'Test WordPress Coding Standards, PHP Coding Standard and PHPCompatibility.'
+
 inputs:
+
   php:
-    description: PHP Version to be checked compatibility with
+    description: 'PHP Version to be checked compatibility with.'
     default: '7.2'
+
   text-domain:
-    description: Text domain of the project
+    description: 'Text domain of the project'
+    default: ''
+
+  phpcs:
+    description: 'Coding Standard from an external public URL.'
+    default: 'https://raw.githubusercontent.com/imjafran/wpcs/master/data/phpcs.xml'
+
+  excludes:
+    description: 'Excludes paths separated by comma (,)'
+    default: ''
+
+  strict:
+    description: 'Strict mode runs test strictly with no bad practice.'
+    default: false
+
+  wpscan:
+    description: 'Use WPScan to detect vulnerability.'
+    default: false
+
 outputs:
   php:
-    description: PHP Version that checked compatibility with
+    description: 'PHP Version that checked compatibility with.'
+    
 runs:
-  using: composite
+  using: 'composite'
   steps:
     - run: wpcs.sh
       shell: bash
