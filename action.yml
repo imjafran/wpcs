@@ -1,16 +1,16 @@
-name: "Test WordPress Coding Standards"
-description: "Test WordPress Coding Standards, PHP Coding Standard and PHPCompatibility"
+name: 'Test WordPress Coding Standards'
+description: 'Test WordPress Coding Standards, PHP Coding Standard and PHPCompatibility'
 inputs:
-    php: # id of input
-        description: "PHP Version to be checked compatibility with"
-        default: "7.2"
-    text-domain: # id of input
-        description: "Text domain of the project"
+  php: # id of input
+    description: 'PHP Version to be checked compatibility with'
+    default: '7.2'
+  text-domain: # id of input
+    description: 'Text domain of the project'
 outputs:
-    php: # id of output
-        description: "PHP Version that checked compatibility with"
+  php: # id of output
+    description: 'PHP Version that checked compatibility with'
 runs:
-    using: "composite"
-    steps:
-        - run: scripts/test.sh
-          shell: bash
+  using: 'composite'
+  steps:
+    - run: scripts/test.sh
+      shell: bash
