@@ -31,9 +31,9 @@ inputs:
 outputs:
   php:
     description: 'PHP Version that checked compatibility with.'
-    
+
 runs:
   using: 'composite'
   steps:
-    - run: wpcs.sh
+    - run: script.sh
       shell: bash
