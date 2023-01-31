@@ -12,5 +12,5 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - run: scripts/test.sh
+    - run: scripts/wpcs.sh
       shell: bash
