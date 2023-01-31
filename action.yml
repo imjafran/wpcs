@@ -13,3 +13,4 @@ runs:
   using: composite
   steps:
     - run: scripts/wpcs.sh
+      shell: bash
