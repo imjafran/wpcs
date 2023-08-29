@@ -1,6 +1,7 @@
 name: 'Test WordPress Coding Standards'
 
 description: 'Test WordPress Coding Standards, PHP Coding Standard and PHPCompatibility.'
+author: 'imjafran'
 
 inputs:
 
@@ -16,14 +17,6 @@ inputs:
     description: 'Coding Standard from an external public URL.'
     default: 'https://raw.githubusercontent.com/imjafran/wpcs/master/data/phpcs.xml'
 
-  excludes:
-    description: 'Excludes paths separated by comma (,)'
-    default: ''
-
-  strict:
-    description: 'Strict mode runs test strictly with no bad practice.'
-    default: false
-
   wpscan:
     description: 'Use WPScan to detect vulnerability.'
     default: false
@@ -31,9 +24,11 @@ inputs:
 outputs:
   php:
     description: 'PHP Version that checked compatibility with.'
+    value: ${{ steps.test.outputs.report }}
 
 runs:
   using: 'composite'
   steps:
-    - run: script.sh
+    - id: test
+    - run: ${{ github.action_path }}/script.sh
       shell: bash
