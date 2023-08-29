@@ -6,7 +6,7 @@ inputs:
 
   php:
     description: 'PHP Version to be checked compatibility with.'
-    default: '7.2'
+    default: '8.2'
 
   text-domain:
     description: 'Text domain of the project'
