@@ -1,4 +1,4 @@
-name: Test WPCS Action
+name: Test phpwpcs Action
 
 on:
   push:
@@ -48,9 +48,9 @@ jobs:
           }
           EOF
       
-      - name: Test WPCS Action
+      - name: Test phpwpcs Action
         id: wpcs
-        uses: ./
+        uses: imjafran/phpwpcs@v1.0.0
         with:
           paths: 'test-files/'
           fail-on: 'never'
@@ -115,7 +115,7 @@ jobs:
           EOF
       
       - name: Test Standard - ${{ matrix.standards }}
-        uses: ./
+        uses: imjafran/phpwpcs@v1.0.0
         with:
           paths: 'test-files/'
           standards: ${{ matrix.standards }}
@@ -127,26 +127,26 @@ jobs:
       - uses: actions/checkout@v4
       
       - name: Test Empty Directory
-        uses: ./
+        uses: imjafran/phpwpcs@v1.0.0
         with:
           paths: 'empty-dir/'
           fail-on: 'never'
       
       - name: Test Custom Config URL
-        uses: ./
+        uses: imjafran/phpwpcs@v1.0.0
         with:
           config-url: 'https://httpbin.org/status/404'
           fail-on: 'never'
       
       - name: Test PHP Version Range
-        uses: ./
+        uses: imjafran/phpwpcs@v1.0.0
         with:
           min-php-version: '7.4'
           max-php-version: '8.2'
           fail-on: 'never'
       
       - name: Test Different Failure Modes
-        uses: ./
+        uses: imjafran/phpwpcs@v1.0.0
         with:
           fail-on: 'warning'
           paths: 'test-files/'

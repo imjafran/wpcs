@@ -1,4 +1,7 @@
-# WPCS - WordPress Coding Standards GitHub Action
+# phpwpcs - WordPress Coding Standards GitHub Action
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PHP Support](https://img.shields.io/badge/PHP-7.4--8.3-blue.svg)](https://php.net)
 
 A comprehensive GitHub Action for checking WordPress Coding Standards with PHP compatibility support.
 
@@ -25,8 +28,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: WPCS Check
-        uses: ./
+      - name: phpwpcs Check
+        uses: imjafran/phpwpcs@v1.0.0
 ```
 
 ## Inputs
@@ -55,14 +58,14 @@ jobs:
 
 ### Basic Usage
 ```yaml
-- name: WPCS Check
-  uses: ./
+- name: phpwpcs Check
+  uses: imjafran/phpwpcs@v1.0.0
 ```
 
 ### Plugin Development
 ```yaml
 - name: Plugin Standards Check
-  uses: ./
+  uses: imjafran/phpwpcs@v1.0.0
   with:
     paths: 'includes/ admin/ public/'
     standards: 'WordPress,PHPCompatibility'
@@ -75,7 +78,7 @@ jobs:
 ### Theme Development
 ```yaml
 - name: Theme Standards Check
-  uses: ./
+  uses: imjafran/phpwpcs@v1.0.0
   with:
     standards: 'WordPress-Core,WordPress-Extra'
     ignore-patterns: 'node_modules/*,build/*,dist/*,assets/*'
@@ -84,8 +87,8 @@ jobs:
 
 ### Custom Configuration
 ```yaml
-- name: Custom WPCS Check
-  uses: ./
+- name: Custom phpwpcs Check
+  uses: imjafran/phpwpcs@v1.0.0
   with:
     config-url: 'https://example.com/custom-phpcs.xml'
     fail-on: 'never'
@@ -98,11 +101,30 @@ jobs:
 - **WordPress-Extra** - WordPress extra coding standards
 - **PHPCompatibility** - PHP version compatibility checks
 
-## PHP Version Support
+## Technical Details
 
+### PHP Version Support
 - **Minimum**: PHP 7.4
 - **Maximum**: PHP 8.3
 - **Default**: PHP 8.0
+
+### Action Architecture
+- **Type**: Composite Action
+- **Dependencies**: PHP_CodeSniffer, WordPress Coding Standards, PHP Compatibility
+- **Configuration**: Uses phpcs.xml for WordPress standards
+- **Outputs**: violations, errors, warnings, files
+
+### File Structure
+```
+phpwpcs/
+├── action.yml              # Main action definition
+├── data/phpcs.xml          # Default WordPress configuration
+├── scripts/
+│   ├── setup.sh           # Install dependencies
+│   ├── run-checks.sh      # Execute PHPCS
+│   └── validate.sh        # Validate action structure
+└── examples/              # Usage examples
+```
 
 ## Configuration
 
@@ -130,16 +152,67 @@ You can customize these using the `ignore-patterns` input.
 
 ## Contributing
 
+### For Developers
+
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Make your changes following WordPress Coding Standards
 4. Add tests if applicable
-5. Submit a pull request
+5. Run validation: `./scripts/validate.sh`
+6. Submit a pull request
+
+### Development Workflow
+
+```bash
+# Clone the repository
+git clone https://github.com/imjafran/phpwpcs.git
+cd phpwpcs
+
+# Install dependencies (if needed)
+# The action uses composite action, so no additional dependencies
+
+# Validate the action
+./scripts/validate.sh
+
+# Test locally
+# Create a test workflow using ./
+```
 
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
+## Development
+
+### Local Testing
+```yaml
+- name: phpwpcs Check
+  uses: ./
+```
+
+### Building and Testing
+```bash
+# Validate action structure
+./scripts/validate.sh
+
+# Run tests
+./scripts/release.sh
+```
+
 ## Support
 
-For issues and questions, please use the GitHub Issues page.
+### For Developers
+
+- **Issues**: [GitHub Issues](https://github.com/imjafran/phpwpcs/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/imjafran/phpwpcs/discussions)
+- **Documentation**: This README and examples in `/examples`
+- **Testing**: Use the test workflow in `.github/workflows/test.yml`
+
+### Reporting Issues
+
+When reporting issues, please include:
+- Action version used
+- PHP version
+- WordPress standards being checked
+- Complete error output
+- Steps to reproduce
