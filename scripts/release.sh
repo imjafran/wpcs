@@ -4,7 +4,7 @@ set -e
 VERSION="1.0.0"
 RELEASE_DATE=$(date +"%Y-%m-%d")
 
-echo "🚀 Preparing WPCS GitHub Action Release v$VERSION"
+echo "🚀 Preparing phpwpcs GitHub Action Release v$VERSION"
 
 # Validate action structure
 echo "🔍 Validating action structure..."
@@ -52,19 +52,19 @@ EOF
 echo "📝 Updating version information..."
 
 # Update README.md with version
-sed -i.bak "s/uses: \.\//uses: imjafran\/wpcs@v$VERSION/g" README.md
-sed -i.bak "s/uses: \.\//uses: imjafran\/wpcs@v$VERSION/g" examples/*.yml
+sed -i.bak "s/uses: \.\//uses: imjafran\/phpwpcs@v$VERSION/g" README.md
+sed -i.bak "s/uses: \.\//uses: imjafran\/phpwpcs@v$VERSION/g" examples/*.yml
 
 # Create release notes
 echo "📄 Creating release notes..."
 cat > RELEASE_NOTES.md << EOF
-# WPCS v$VERSION Release Notes
+# phpwpcs v$VERSION Release Notes
 
 ## Release Date: $RELEASE_DATE
 
 ## What's New
 
-This is the initial release of the WPCS GitHub Action, providing comprehensive WordPress Coding Standards checking with PHP compatibility support.
+This is the initial release of the phpwpcs GitHub Action, providing comprehensive WordPress Coding Standards checking with PHP compatibility support.
 
 ### Features
 
@@ -87,8 +87,8 @@ This is the initial release of the WPCS GitHub Action, providing comprehensive W
 ### Usage
 
 \`\`\`yaml
-- name: WPCS Check
-  uses: imjafran/wpcs@v$VERSION
+- name: phpwpcs Check
+  uses: imjafran/phpwpcs@v$VERSION
 \`\`\`
 
 ### Breaking Changes
@@ -101,7 +101,7 @@ None at this time.
 
 ### Support
 
-- GitHub Issues: https://github.com/imjafran/wpcs/issues
+- GitHub Issues: https://github.com/imjafran/phpwpcs/issues
 - Documentation: README.md
 - Examples: examples/ directory
 

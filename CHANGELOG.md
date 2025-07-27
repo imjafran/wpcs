@@ -1,10 +1,11 @@
 # Changelog
 
-## [1.0.1] - 2024-12-19
+## [1.0.0] - 2024-12-19
 
 ### Changed
+- Renamed action from "WPCS" to "phpwpcs"
 - Updated all examples and documentation to use the published marketplace version
-- Fixed action references from `./` to `imjafran/wpcs@v1.0.1`
+- Fixed action references from `./` to `imjafran/phpwpcs@v1.0.0`
 
 ## [1.0.0] - 2024-12-19
 
@@ -41,7 +42,7 @@
 
 ## Structure
 ```
-WPCS/
+phpwpcs/
 ├── action.yml              # Main action definition
 ├── README.md               # Comprehensive documentation
 ├── LICENSE                 # MIT License

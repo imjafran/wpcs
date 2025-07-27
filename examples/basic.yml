@@ -8,5 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: WPCS Check
-        uses: imjafran/wpcs@v1.0.1
+      - name: phpwpcs Check
+        # For production: uses: imjafran/phpwpcs@v1.0.0
+        # For development: uses: ./
+        uses: imjafran/phpwpcs@v1.0.0

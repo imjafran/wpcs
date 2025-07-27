@@ -1,4 +1,4 @@
-# Release Checklist for WPCS GitHub Action
+# Release Checklist for phpwpcs GitHub Action
 
 ## Pre-Release Validation ✅
 
@@ -47,7 +47,7 @@ echo '<?php echo "test"; ?>' > test.php
 1. Go to GitHub repository
 2. Click "Releases" → "Create a new release"
 3. Tag: `v1.0.0`
-4. Title: `WPCS v1.0.0 - WordPress Coding Standards Action`
+4. Title: `phpwpcs v1.0.0 - WordPress Coding Standards Action`
 5. Description: Copy from CHANGELOG.md
 
 ### 4. Update Documentation
@@ -58,7 +58,7 @@ echo '<?php echo "test"; ?>' > test.php
 ### 5. Publish Action
 - [ ] Ensure repository is public
 - [ ] Verify action.yml is properly formatted
-- [ ] Test action with `uses: imjafran/wpcs@v1.0.0`
+- [ ] Test action with `uses: imjafran/phpwpcs@v1.0.0`
 
 ## Post-Release Tasks
 
@@ -79,7 +79,7 @@ echo '<?php echo "test"; ?>' > test.php
 
 ## Version Information
 
-- **Version**: 1.0.1
+- **Version**: 1.0.0
 - **Release Date**: 2024-12-19
 - **PHP Support**: 7.4 - 8.3
 - **Standards**: WordPress, WordPress-Core, WordPress-Extra, PHPCompatibility
@@ -88,12 +88,12 @@ echo '<?php echo "test"; ?>' > test.php
 ## Action Usage
 
 ```yaml
-- name: WPCS Check
-  uses: imjafran/wpcs@v1.0.1
+- name: phpwpcs Check
+  uses: imjafran/phpwpcs@v1.0.0
 ```
 
 ## Support
 
-- GitHub Issues: [Repository Issues](https://github.com/imjafran/wpcs/issues)
+- GitHub Issues: [Repository Issues](https://github.com/imjafran/phpwpcs/issues)
 - Documentation: [README.md](README.md)
 - Examples: [examples/](examples/) 
