@@ -1,34 +1,111 @@
-name: 'Test WordPress Coding Standards'
-
-description: 'Test WordPress Coding Standards, PHP Coding Standard and PHPCompatibility.'
+name: 'WPCS'
+description: 'WordPress Coding Standards checker with PHP Compatibility'
 author: 'imjafran'
 
+branding:
+  icon: 'check-circle'
+  color: 'blue'
+
 inputs:
-
-  php:
-    description: 'PHP Version to be checked compatibility with.'
-    default: '8.2'
-
-  text-domain:
-    description: 'Text domain of the project'
+  paths:
+    description: 'Paths to check'
+    required: false
+    default: '.'
+  
+  standards:
+    description: 'PHPCS standards (WordPress,WordPress-Core,WordPress-Extra,PHPCompatibility)'
+    required: false
+    default: 'WordPress,PHPCompatibility'
+  
+  php-version:
+    description: 'PHP version (7.4-8.3)'
+    required: false
+    default: '8.0'
+  
+  min-php-version:
+    description: 'Minimum PHP version for compatibility'
+    required: false
+    default: '7.4'
+  
+  max-php-version:
+    description: 'Maximum PHP version for compatibility'
+    required: false
+    default: '8.3'
+  
+  config-url:
+    description: 'Custom phpcs.xml URL'
+    required: false
     default: ''
-
-  phpcs:
-    description: 'Coding Standard from an external public URL.'
-    default: 'https://raw.githubusercontent.com/imjafran/wpcs/master/data/phpcs.xml'
-
-  wpscan:
-    description: 'Use WPScan to detect vulnerability.'
-    default: false
+  
+  fail-on:
+    description: 'Fail on (error, warning, never)'
+    required: false
+    default: 'error'
+  
+  ignore-patterns:
+    description: 'Patterns to ignore'
+    required: false
+    default: 'vendor/*,node_modules/*,build/*,dist/*'
 
 outputs:
-  php:
-    description: 'PHP Version that checked compatibility with.'
-    value: ${{ steps.test.outputs.report }}
+  violations:
+    description: 'Total violations'
+  errors:
+    description: 'Error count'
+  warnings:
+    description: 'Warning count'
+  files:
+    description: 'Files checked'
 
 runs:
   using: 'composite'
   steps:
-    - id: test
-    - run: ${{ github.action_path }}/script.sh
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ inputs.php-version }}
+        tools: composer:v2
+        coverage: none
+    
+    - name: Setup WPCS
       shell: bash
+      run: ${{ github.action_path }}/scripts/setup.sh
+      env:
+        STANDARDS: ${{ inputs.standards }}
+        MIN_PHP: ${{ inputs.min-php-version }}
+        MAX_PHP: ${{ inputs.max-php-version }}
+    
+    - name: Prepare Config
+      shell: bash
+      run: |
+        rm -f composer.json composer.lock
+        
+        if [ -f phpcs.xml ]; then
+          echo "📋 Using existing phpcs.xml"
+        elif [ -n "${{ inputs.config-url }}" ]; then
+          echo "📥 Downloading custom config from ${{ inputs.config-url }}"
+          if curl -sL "${{ inputs.config-url }}" -o phpcs.xml; then
+            echo "✅ Custom config downloaded successfully"
+          else
+            echo "⚠️ Failed to download custom config, using default"
+            cp ${{ github.action_path }}/data/phpcs.xml phpcs.xml
+          fi
+                  else
+            echo "📋 Using default phpcs.xml configuration"
+            cp ${{ github.action_path }}/data/phpcs.xml phpcs.xml
+          fi
+        
+        # Update PHP version in config if PHPCompatibility is present
+        if grep -q "PHPCompatibility" phpcs.xml; then
+          echo "🔧 Updating PHP version range in config"
+          sed -i "s/testVersion\" value=\"[^\"]*\"/testVersion\" value=\"${{ inputs.min-php-version }}-${{ inputs.max-php-version }}\"/" phpcs.xml
+        fi
+    
+    - name: Run Checks
+      shell: bash
+      run: ${{ github.action_path }}/scripts/run-checks.sh
+      env:
+        PATHS: ${{ inputs.paths }}
+        STANDARDS: ${{ inputs.standards }}
+        IGNORE: ${{ inputs.ignore-patterns }}
+        FAIL_ON: ${{ inputs.fail-on }}

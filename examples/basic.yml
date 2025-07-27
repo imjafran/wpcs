@@ -1,0 +1,12 @@
+name: Basic WPCS Check
+
+on: [push, pull_request]
+
+jobs:
+  wpcs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: WPCS Check
+        uses: ./

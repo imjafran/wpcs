@@ -1,0 +1,19 @@
+name: WordPress Plugin Check
+
+on: [push, pull_request]
+
+jobs:
+  plugin-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Plugin Standards Check
+        uses: ./
+        with:
+          paths: 'includes/ admin/ public/'
+          standards: 'WordPress,PHPCompatibility'
+          php-version: '8.0'
+          min-php-version: '7.4'
+          max-php-version: '8.3'
+          ignore-patterns: 'vendor/*,node_modules/*,tests/*'

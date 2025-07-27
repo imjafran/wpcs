@@ -1,0 +1,152 @@
+name: Test WPCS Action
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Create test files
+        run: |
+          mkdir test-files
+          
+          # Bad code
+          cat > test-files/bad.php << 'EOF'
+          <?php
+          class badClass {
+              function badMethod($a,$b) {
+                  if($a=="test") echo "bad";
+              }
+          }
+          EOF
+          
+          # Good code
+          cat > test-files/good.php << 'EOF'
+          <?php
+          /**
+           * Good class example
+           * 
+           * @package TestPackage
+           */
+          class GoodClass {
+              /**
+               * Good method
+               * 
+               * @param string $param Parameter.
+               * @return void
+               */
+              public function good_method( $param ) {
+                  if ( 'test' === $param ) {
+                      echo esc_html( 'good' );
+                  }
+              }
+          }
+          EOF
+      
+      - name: Test WPCS Action
+        id: wpcs
+        uses: ./
+        with:
+          paths: 'test-files/'
+          fail-on: 'never'
+      
+      - name: Verify Results
+        run: |
+          echo "Violations: ${{ steps.wpcs.outputs.violations }}"
+          echo "Errors: ${{ steps.wpcs.outputs.errors }}"
+          echo "Warnings: ${{ steps.wpcs.outputs.warnings }}"
+          echo "Files: ${{ steps.wpcs.outputs.files }}"
+          
+          if [ "${{ steps.wpcs.outputs.violations }}" -gt "0" ]; then
+            echo "✅ Test passed - found violations as expected"
+          else
+            echo "❌ Test failed - no violations found"
+            exit 1
+          fi
+          
+          # Verify outputs are set
+          if [ -z "${{ steps.wpcs.outputs.violations }}" ]; then
+            echo "❌ Test failed - violations output not set"
+            exit 1
+          fi
+          
+          if [ -z "${{ steps.wpcs.outputs.errors }}" ]; then
+            echo "❌ Test failed - errors output not set"
+            exit 1
+          fi
+          
+          if [ -z "${{ steps.wpcs.outputs.warnings }}" ]; then
+            echo "❌ Test failed - warnings output not set"
+            exit 1
+          fi
+          
+          if [ -z "${{ steps.wpcs.outputs.files }}" ]; then
+            echo "❌ Test failed - files output not set"
+            exit 1
+          fi
+  
+  test-standards:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        standards: 
+          - 'WordPress'
+          - 'WordPress-Core'
+          - 'WordPress-Extra'
+          - 'PHPCompatibility'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Create test file
+        run: |
+          mkdir test-files
+          cat > test-files/test.php << 'EOF'
+          <?php
+          class testClass {
+              function test() {
+                  echo "test";
+              }
+          }
+          EOF
+      
+      - name: Test Standard - ${{ matrix.standards }}
+        uses: ./
+        with:
+          paths: 'test-files/'
+          standards: ${{ matrix.standards }}
+          fail-on: 'never'
+          
+  test-edge-cases:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Test Empty Directory
+        uses: ./
+        with:
+          paths: 'empty-dir/'
+          fail-on: 'never'
+      
+      - name: Test Custom Config URL
+        uses: ./
+        with:
+          config-url: 'https://httpbin.org/status/404'
+          fail-on: 'never'
+      
+      - name: Test PHP Version Range
+        uses: ./
+        with:
+          min-php-version: '7.4'
+          max-php-version: '8.2'
+          fail-on: 'never'
+      
+      - name: Test Different Failure Modes
+        uses: ./
+        with:
+          fail-on: 'warning'
+          paths: 'test-files/'
