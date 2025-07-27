@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.1] - 2024-12-19
+
+### Changed
+- Updated all examples and documentation to use the published marketplace version
+- Fixed action references from `./` to `imjafran/wpcs@v1.0.1`
+
 ## [1.0.0] - 2024-12-19
 
 ### Added

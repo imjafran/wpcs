@@ -9,4 +9,4 @@ jobs:
       - uses: actions/checkout@v4
       
       - name: WPCS Check
-        uses: ./
+        uses: imjafran/wpcs@v1.0.1

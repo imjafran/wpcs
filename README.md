@@ -1,5 +1,8 @@
 # WPCS - WordPress Coding Standards GitHub Action
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PHP Support](https://img.shields.io/badge/PHP-7.4--8.3-blue.svg)](https://php.net)
+
 A comprehensive GitHub Action for checking WordPress Coding Standards with PHP compatibility support.
 
 ## Features
@@ -15,6 +18,22 @@ A comprehensive GitHub Action for checking WordPress Coding Standards with PHP c
 
 ## Quick Start
 
+### From GitHub Marketplace
+```yaml
+name: WPCS Check
+on: [push, pull_request]
+
+jobs:
+  wpcs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: WPCS Check
+        uses: imjafran/wpcs@v1.0.1
+```
+
+### From Source (Development)
 ```yaml
 name: WPCS Check
 on: [push, pull_request]
@@ -56,13 +75,13 @@ jobs:
 ### Basic Usage
 ```yaml
 - name: WPCS Check
-  uses: ./
+  uses: imjafran/wpcs@v1.0.1
 ```
 
 ### Plugin Development
 ```yaml
 - name: Plugin Standards Check
-  uses: ./
+  uses: imjafran/wpcs@v1.0.1
   with:
     paths: 'includes/ admin/ public/'
     standards: 'WordPress,PHPCompatibility'
@@ -75,7 +94,7 @@ jobs:
 ### Theme Development
 ```yaml
 - name: Theme Standards Check
-  uses: ./
+  uses: imjafran/wpcs@v1.0.1
   with:
     standards: 'WordPress-Core,WordPress-Extra'
     ignore-patterns: 'node_modules/*,build/*,dist/*,assets/*'
@@ -85,7 +104,7 @@ jobs:
 ### Custom Configuration
 ```yaml
 - name: Custom WPCS Check
-  uses: ./
+  uses: imjafran/wpcs@v1.0.1
   with:
     config-url: 'https://example.com/custom-phpcs.xml'
     fail-on: 'never'
@@ -139,6 +158,22 @@ You can customize these using the `ignore-patterns` input.
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## GitHub Marketplace
+
+This action is available on the [GitHub Marketplace](https://github.com/marketplace/actions/wpcs-wordpress-coding-standards) where you can:
+
+- 📦 **Install directly** into your workflows
+- ⭐ **Rate and review** the action
+- 🔔 **Get notifications** about updates
+- 📚 **View detailed documentation**
+
+### Installation
+
+1. Go to the [GitHub Marketplace](https://github.com/marketplace/actions/wpcs-wordpress-coding-standards)
+2. Click "Use latest version"
+3. Select your repository
+4. Configure the action as needed
 
 ## Support
 

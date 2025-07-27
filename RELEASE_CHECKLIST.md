@@ -79,7 +79,7 @@ echo '<?php echo "test"; ?>' > test.php
 
 ## Version Information
 
-- **Version**: 1.0.0
+- **Version**: 1.0.1
 - **Release Date**: 2024-12-19
 - **PHP Support**: 7.4 - 8.3
 - **Standards**: WordPress, WordPress-Core, WordPress-Extra, PHPCompatibility
@@ -89,7 +89,7 @@ echo '<?php echo "test"; ?>' > test.php
 
 ```yaml
 - name: WPCS Check
-  uses: imjafran/wpcs@v1.0.0
+  uses: imjafran/wpcs@v1.0.1
 ```
 
 ## Support
