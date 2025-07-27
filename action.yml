@@ -1,4 +1,4 @@
-name: 'phpcs-wpcs'
+name: 'wpcs'
 description: 'WordPress Coding Standards checker with PHP Compatibility'
 author: 'imjafran'
 
